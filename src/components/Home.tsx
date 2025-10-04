@@ -7,7 +7,7 @@ export default function Home() {
         src="/image/FCL_icon.webp"
         alt="Fold Craft Launcher logo" 
         width={180}
-        height={38}
+        height={180}
         priority
       />
       <h1 className="font-bold text-4xl sm:text-left text-center tracking-tight">

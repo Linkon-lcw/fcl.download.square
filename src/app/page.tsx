@@ -24,9 +24,11 @@ export default function App() {
   };
 
   return (
-    <div className="justify-items-center items-center gap-0 grid grid-rows-[64px_1fr_64px] min-w-screen min-h-screen font-sans">
+    <div className="justify-items-center items-center gap-0 grid grid-rows-[1fr_64px] min-w-full min-h-screen font-sans">
       <Header currentPage={currentPage} onPageChange={handlePageChange} />
-      {renderPage()}
+      <div >
+        {renderPage()}
+      </div>
     </div>
   );
 }

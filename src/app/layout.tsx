@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Header from "@/components/Header";
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <div className="pt-16 w-full">
+          {children}
+        </div>
       </body>
     </html>
   );
