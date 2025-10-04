@@ -17,6 +17,7 @@ export interface SoftwareConfigWay {
   id: string;
   name: string;
   path: string;
+  provider?: string;
 }
 
 export interface SoftwareConfigFile {
@@ -47,6 +48,7 @@ export interface DownloadFile {
 export interface SelectorItem {
   id: string;
   name: string;
+  provider?: string;
 }
 
 // 组件通用接口
@@ -81,6 +83,8 @@ export interface TreeStructureViewProps {
   appName: string;
   wayName: string;
   data: DownloadWay;
+  apiVersion?: number | null;
+  processedData?: any;
 }
 
 export interface SimpleListViewProps {

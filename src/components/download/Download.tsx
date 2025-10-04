@@ -27,7 +27,7 @@ export default function Download() {
     ?.children.find(way => way.id === selectedWay);
   
   const isExternalWay = currentWay?.path?.startsWith('http') || false;
-  const { data: wayData, loading: wayLoading, error: wayError } = useDownloadWay(
+  const { data: wayData, processedData, apiVersion, loading: wayLoading, error: wayError } = useDownloadWay(
     currentWay?.path || '', 
     isExternalWay
   );
@@ -121,7 +121,11 @@ export default function Download() {
       {/* 线路选择器 */}
       {currentApp && (
         <WaySelector 
-          ways={currentApp.children.map(way => ({ id: way.id, name: way.name }))}
+          ways={currentApp.children.map(way => ({ 
+            id: way.id, 
+            name: way.name,
+            provider: way.provider
+          }))}
           selectedWay={selectedWay}
           onWaySelect={handleWaySelect}
         />
@@ -147,6 +151,8 @@ export default function Download() {
           appName={getAppDisplayName(selectedApp)}
           wayName={getWayDisplayName(selectedWay)}
           data={wayData}
+          apiVersion={apiVersion}
+          processedData={processedData}
         />
       )}
 

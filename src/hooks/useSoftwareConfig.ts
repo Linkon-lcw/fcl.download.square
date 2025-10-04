@@ -6,6 +6,7 @@ import {
   SoftwareConfigFile,
   DownloadWay,
 } from '@/types';
+import { processDownloadData, UnifiedItem } from '@/services/downloadUtils';
 
 // 懒加载软件配置的Hook
 export function useSoftwareConfig() {
@@ -42,6 +43,8 @@ export function useSoftwareConfig() {
 // 懒加载下载线路数据的Hook
 export function useDownloadWay(path: string, isExternal: boolean = false) {
   const [data, setData] = useState<DownloadWay | SoftwareConfigFile[] | null>(null);
+  const [processedData, setProcessedData] = useState<UnifiedItem[] | null>(null);
+  const [apiVersion, setApiVersion] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,6 +71,14 @@ export function useDownloadWay(path: string, isExternal: boolean = false) {
         
         const jsonData = await response.json();
         setData(jsonData);
+        
+        // 处理数据，检测API版本并转换为统一格式
+        const processed = processDownloadData(jsonData);
+        setProcessedData(processed);
+        
+        // 检测API版本
+        const version = jsonData.api_version === 2 ? 2 : 1;
+        setApiVersion(version);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -78,5 +89,5 @@ export function useDownloadWay(path: string, isExternal: boolean = false) {
     loadData();
   }, [path, isExternal]);
 
-  return { data, loading, error, refetch: () => {} };
+  return { data, processedData, apiVersion, loading, error, refetch: () => {} };
 }

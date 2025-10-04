@@ -1,31 +1,45 @@
 {
-  "latest": "1.2.4.9",
+  "api_version": 2,
+  "name": "FoldCraftLauncher下载线路4",
+  "url": "",
+  "description": "八蓝米提供\n优点：速度快 | 缺点：更新不及时",
   "children": [
     {
-      "name": "1.2.4.9",
+      "version": "1.2.4.9",
+      "name": "1.2.4.9(最新版)",
       "type": "directory",
       "children": [
         {
+          "version": "1.2.4.9",
+          "name": "1.2.4.9",
           "type": "file",
           "download_link": "https://alist.8mi.tech/d/mirror/FCL/Auto/FCL-release-1.2.4.9-all.apk",
           "arch": "all"
         },
         {
+          "version": "1.2.4.9",
+          "name": "1.2.4.9",
           "type": "file",
           "download_link": "https://alist.8mi.tech/d/mirror/FCL/Auto/FCL-release-1.2.4.9-arm64-v8a.apk",
           "arch": "arm64-v8a"
         },
         {
+          "version": "1.2.4.9",
+          "name": "1.2.4.9",
           "type": "file",
           "download_link": "https://alist.8mi.tech/d/mirror/FCL/Auto/FCL-release-1.2.4.9-armeabi-v7a.apk",
           "arch": "armeabi-v7a"
         },
         {
+          "version": "1.2.4.9",
+          "name": "1.2.4.9",
           "type": "file",
           "download_link": "https://alist.8mi.tech/d/mirror/FCL/Auto/FCL-release-1.2.4.9-x86.apk",
           "arch": "x86"
         },
         {
+          "version": "1.2.4.9",
+          "name": "1.2.4.9",
           "type": "file",
           "download_link": "https://alist.8mi.tech/d/mirror/FCL/Auto/FCL-release-1.2.4.9-x86_64.apk",
           "arch": "x86_64"

@@ -9,11 +9,11 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ name, downloadLink }) =
   return (
     <button
       onClick={handleDownload}
-      className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+      className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg font-medium text-white transition duration-200"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 mr-2"
+        className="mr-2 w-5 h-5"
         viewBox="0 0 20 20"
         fill="currentColor"
       >
