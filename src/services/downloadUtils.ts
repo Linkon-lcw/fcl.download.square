@@ -4,6 +4,8 @@
  * 兼容nestedPath功能
  */
 
+import { SoftwareConfig, SoftwareConfigApp, SoftwareConfigWay, SoftwareConfigFile } from "@/types";
+
 // API 1.0 格式接口
 interface Api1Format {
   latest: string;

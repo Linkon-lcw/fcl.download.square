@@ -3,6 +3,7 @@
  */
 
 import { detectApiVersion, processApi1Data, processApi2Data, processNestedPath, processDownloadData, UnifiedItem } from './downloadUtils';
+import { SoftwareConfig, SoftwareConfigApp, SoftwareConfigWay, SoftwareConfigFile } from "@/types";
 
 // 简单的测试函数
 function test(description: string, testFn: () => void) {

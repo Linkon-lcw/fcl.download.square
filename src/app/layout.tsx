@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 

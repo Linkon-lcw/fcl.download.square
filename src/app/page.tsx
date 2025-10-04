@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import Home from "@/components/Home";
-import Download from "@/components/Download";
+import Download from "@/components/download/Download";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
