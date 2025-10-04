@@ -3,12 +3,12 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import DownloadButton from "@/components/ui/DownloadButton";
 import { DownloadWay } from "@/types";
-import { UnifiedItem } from "@/services/downloadUtils";
+import { UnifiedItem, UnifiedFile } from "@/services/downloadUtils";
 
 interface TreeStructureViewProps {
   appName: string;
   wayName: string;
-  data: DownloadWay;
+  data: DownloadWay & { name?: string; description?: string };
   apiVersion?: number | null;
   processedData?: UnifiedItem[] | null;
 }
@@ -22,19 +22,20 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
           {data.name || wayName}
         </h2>
         {data.description && (
-          <div className="mb-4 text-gray-600 dark:text-gray-400 text-sm max-w-none">
+          <div className="mb-4 max-w-none text-gray-600 dark:text-gray-400 text-sm">
             <ReactMarkdown 
               remarkPlugins={[remarkGfm]}
               components={{
                 // 自定义代码块样式
                 code({ node, inline, className, children, ...props }) {
-                  return inline ? (
-                    <code className="bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400 px-1 py-0.5 rounded text-sm font-mono" {...props}>
+                  const isInline = inline as boolean;
+                  return isInline ? (
+                    <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded font-mono text-red-600 dark:text-red-400 text-sm" {...props}>
                       {children}
                     </code>
                   ) : (
-                    <pre className="bg-gray-100 dark:bg-gray-800 p-3 rounded-md overflow-x-auto my-2">
-                      <code className="text-sm font-mono" {...props}>
+                    <pre className="bg-gray-100 dark:bg-gray-800 my-2 p-3 rounded-md overflow-x-auto">
+                      <code className="font-mono text-sm" {...props}>
                         {children}
                       </code>
                     </pre>
@@ -43,7 +44,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                 // 自定义引用样式
                 blockquote({ node, children, ...props }) {
                   return (
-                    <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 py-2 my-2 italic" {...props}>
+                    <blockquote className="my-2 py-2 pl-4 border-gray-300 dark:border-gray-600 border-l-4 italic" {...props}>
                       {children}
                     </blockquote>
                   );
@@ -51,14 +52,14 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                 // 自定义列表样式
                 ul({ node, children, ...props }) {
                   return (
-                    <ul className="list-disc pl-5 my-2 space-y-1" {...props}>
+                    <ul className="space-y-1 my-2 pl-5 list-disc" {...props}>
                       {children}
                     </ul>
                   );
                 },
                 ol({ node, children, ...props }) {
                   return (
-                    <ol className="list-decimal pl-5 my-2 space-y-1" {...props}>
+                    <ol className="space-y-1 my-2 pl-5 list-decimal" {...props}>
                       {children}
                     </ol>
                   );
@@ -73,8 +74,8 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                 // 自定义表格样式
                 table({ node, children, ...props }) {
                   return (
-                    <div className="overflow-x-auto my-2">
-                      <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-600" {...props}>
+                    <div className="my-2 overflow-x-auto">
+                      <table className="border border-gray-300 dark:border-gray-600 min-w-full border-collapse" {...props}>
                         {children}
                       </table>
                     </div>
@@ -82,14 +83,14 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                 },
                 th({ node, children, ...props }) {
                   return (
-                    <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left font-semibold bg-gray-50 dark:bg-gray-800" {...props}>
+                    <th className="bg-gray-50 dark:bg-gray-800 px-3 py-2 border border-gray-300 dark:border-gray-600 font-semibold text-left" {...props}>
                       {children}
                     </th>
                   );
                 },
                 td({ node, children, ...props }) {
                   return (
-                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2" {...props}>
+                    <td className="px-3 py-2 border border-gray-300 dark:border-gray-600" {...props}>
                       {children}
                     </td>
                   );
@@ -105,21 +106,21 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                 // 自定义标题样式
                 h1({ node, children, ...props }) {
                   return (
-                    <h1 className="text-2xl font-bold mt-4 mb-2" {...props}>
+                    <h1 className="mt-4 mb-2 font-bold text-2xl" {...props}>
                       {children}
                     </h1>
                   );
                 },
                 h2({ node, children, ...props }) {
                   return (
-                    <h2 className="text-xl font-semibold mt-3 mb-2" {...props}>
+                    <h2 className="mt-3 mb-2 font-semibold text-xl" {...props}>
                       {children}
                     </h2>
                   );
                 },
                 h3({ node, children, ...props }) {
                   return (
-                    <h3 className="text-lg font-medium mt-2 mb-1" {...props}>
+                    <h3 className="mt-2 mb-1 font-medium text-lg" {...props}>
                       {children}
                     </h3>
                   );
@@ -160,8 +161,8 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   {version.children.map((file, index) => (
                     <DownloadButton
                       key={`${version.name}-${file.name}-${index}`}
-                      name={file.arch || file.name || '下载'}
-                      downloadLink={file.download_link}
+                      name={(file as UnifiedFile).arch || file.name || '下载'}
+                      downloadLink={(file as UnifiedFile).download_link}
                     />
                   ))}
                 </div>

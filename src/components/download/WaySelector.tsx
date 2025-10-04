@@ -24,7 +24,7 @@ export default function WaySelector({ ways, selectedWay, onWaySelect }: WaySelec
           >
             <span>{way.name}</span>
             {way.provider && (
-              <span className="text-xs opacity-80 mt-1">
+              <span className="opacity-80 mt-1 text-xs">
                 {way.provider}
               </span>
             )}
