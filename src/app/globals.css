@@ -1,6 +1,8 @@
 @import url("https://fontsapi.zeoseven.com/13/main/result.css");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -14,12 +16,11 @@
   --font-mono: "Cascadia Next SC";
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
+
 
 body {
   background: var(--background);

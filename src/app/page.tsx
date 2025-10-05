@@ -26,7 +26,7 @@ export default function App() {
   return (
     <div className="justify-items-center items-center gap-0 grid grid-rows-[1fr_64px] min-w-full min-h-screen font-sans">
       <Header currentPage={currentPage} onPageChange={handlePageChange} />
-      <div >
+      <div className="mt-[32px]">
         {renderPage()}
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <div className="pt-16 w-full">
+        <div className="pt-16 w-full transition-all duration-300">
           {children}
         </div>
       </body>

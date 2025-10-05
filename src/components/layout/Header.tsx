@@ -7,17 +7,17 @@ import useDarkMode from "@/hooks/useDarkMode";
 
 // 样式生成函数
 const getButtonClasses = (isActive: boolean) => {
-  const baseClasses = "group relative flex items-center px-[10px] py-2 rounded-[20px] transition-all duration-300 h-[40px] min-w-[40px] w-auto overflow-hidden";
-  const activeClasses = "bg-[linear-gradient(to_bottom,transparent_0%,white_80%,white_100%)] rounded-none w-[80px] h-[80px] overflow-visitable translate-y-2";
-  const inactiveClasses = "bg-transparent hover:bg-gray-300 dark:hover:bg-gray-600 max-w-[40px] hover:max-w-[120px] active:rounded-xl active:h-[64px]";
+  const baseClasses = "group relative flex items-start px-[10px] py-2 rounded-[20px] transition-all duration-300 h-[40px] max-w-[40px] w-auto overflow-hidden";
+  const activeClasses = "bg-background items-start rounded-none rounded-t-md w-[120px] max-w-[120px] h-[64px] mt-4 pt-3 overflow-visitable";
+  const inactiveClasses = "bg-transparent hover:bg-gray-500/60 dark:hover:bg-gray-600/60 max-w-[40px] hover:max-w-[120px] active:rounded-xl active:mt-4 active:h-[64px] active:items-start active:mt-4 active:pt-3";
   
   return `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
 };
 
 const getTextClasses = (isActive: boolean) => {
-  const baseClasses = "ml-2 whitespace-nowrap transition-all duration-300";
-  const activeClasses = "opacity-100 max-w-full pr-1 -translate-y-2";
-  const inactiveClasses = "opacity-0 max-w-0 pr-1 group-hover:opacity-100 group-hover:max-w-full";
+  const baseClasses = "ml-[10px] whitespace-nowrap transition-all duration-300 opacity-0";
+  const activeClasses = "opacity-100 max-w-full pr-1";
+  const inactiveClasses = "pr-1 group-hover:opacity-100 ";
   
   return `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
 };
@@ -43,12 +43,13 @@ const NavButton = ({
       onClick={() => onPageChange(page)}
       className={getButtonClasses(isActive)}
     >
-      <div className={`flex justify-center items-center w-[20px] h-[20px] transition-all duration-300 ${isActive ? '-translate-y-2' : 'translate-y-0'}`}>
+      <div className="flex justify-center items-center">
+      <div className={`flex justify-center items-center w-[20px] h-[20px]`}>
         <FontAwesomeIcon icon={icon} className="text-[18px]" />
       </div>
       <span className={getTextClasses(isActive)}>
         {text}
-      </span>
+      </span></div>
     </button>
   );
 };
@@ -67,7 +68,7 @@ export default function Header({ currentPage, onPageChange }: { currentPage: str
           width={40}
           height={40}
         />
-        <p className="overflow-visible font-bold text-2xl whitespace-nowrap">Fold Craft Launcher</p>
+        <p className="overflow-hidden md:overflow-visitable font-bold text-2xl whitespace-nowrap">Fold Craft Launcher</p>
       </div>
       
       {/* 导航菜单 - 中间位置 */}

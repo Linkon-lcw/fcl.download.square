@@ -17,6 +17,23 @@ const useDarkMode = () => {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setIsDarkMode(prefersDark);
     }
+    
+    // 添加系统主题变化监听器
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      // 只有在没有用户手动设置的情况下才跟随系统变化
+      if (localStorage.getItem('darkMode') === null) {
+        setIsDarkMode(e.matches);
+      }
+    };
+    
+    // 添加事件监听器
+    mediaQuery.addEventListener('change', handleChange);
+    
+    // 清理函数，组件卸载时移除监听器
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
   }, []);
 
   useEffect(() => {
