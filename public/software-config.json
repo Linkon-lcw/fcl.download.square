@@ -69,15 +69,8 @@
           "path": "https://api.cxsjmc.cn/api/FCL/filelist.json",
           "description": "高防御",
           "provider": "LANt提供"
-        },
-        {
-          "id": "F9",
-          "name": "测试Markdown支持",
-          "type": "file",
-          "path": "/ways/fcl/test-markdown.json",
-          "description": "测试Markdown和换行符支持",
-          "provider": "开发者提供"
         }
+
       ]
     },
     {
@@ -188,6 +181,14 @@
           "type": "file",
           "path": "/ways/test/test-nested.json",
           "description": "多层嵌套目录测试",
+          "provider": "开发者提供"
+        },
+        {
+          "id": "T2",
+          "name": "测试Markdown支持",
+          "type": "file",
+          "path": "/ways/test/markdown/test-markdown.json",
+          "description": "测试Markdown和换行符支持",
           "provider": "开发者提供"
         }
       ]

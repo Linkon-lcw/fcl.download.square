@@ -145,6 +145,27 @@
 - [x] **步骤3**: 添加详细的日志记录，帮助调试数据处理过程
 - [x] **步骤4**: 测试线路2的数据处理和显示功能
 
+## 当前任务：移动markdown测试线路到测试目录
+
+### 问题分析
+- 项目中存在一个markdown测试文件：`public/ways/fcl/test-markdown.json`
+- 该文件用于测试ReactMarkdown组件的渲染功能
+- 需要将markdown测试相关的文件和代码移动到专门的测试目录结构中
+
+### 解决步骤
+- [x] 创建专门的测试目录结构
+- [x] 移动markdown测试文件到测试目录
+- [x] 更新软件配置中的文件路径
+- [x] 创建markdown相关的测试用例
+- [x] 验证测试功能正常
+
+### 详细说明
+1. 创建一个专门的测试目录结构，用于存放所有测试相关的文件
+2. 将现有的markdown测试文件移动到测试目录
+3. 更新software-config.json中的文件路径引用
+4. 创建markdown渲染功能的测试用例
+5. 确保测试功能在移动后仍然正常工作
+
 ## 当前任务：修复TreeStructureView.tsx和downloadUtils.test.ts中的TypeScript错误
 
 ### 问题分析
