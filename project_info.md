@@ -28,6 +28,7 @@ FCL 下载站是一个为 Fold Craft Launcher (FCL) 和 Zalith Launcher (ZL) 社
    - 链接：https://frostlynx.work/external/fcl/file_tree.json
    - 特点：更新快
    - 提供者：哈哈66623332提供
+   - 嵌套："fcl"
 
 3. **FCL线3** - 本地文件
    - 特点：全版本

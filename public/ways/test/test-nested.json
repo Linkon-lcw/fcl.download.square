@@ -1,0 +1,123 @@
+{
+  "api_version": 2,
+  "name": "测试无限嵌套目录",
+  "description": "这是一个用于测试无限嵌套目录结构的示例文件。\n\n**功能特性：**\n- 支持多层嵌套目录\n- 自动适应深色模式\n- 响应式布局设计\n- 支持文件下载",
+  "children": [
+    {
+      "version": "1.0.0",
+      "name": "第一层目录",
+      "type": "directory",
+      "children": [
+        {
+          "version": "1.1.0",
+          "name": "第二层目录 - 子目录A",
+          "type": "directory",
+          "children": [
+            {
+              "version": "1.1.1",
+              "name": "第三层目录 - 深度嵌套",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "深度嵌套文件1",
+                  "type": "file",
+                  "download_link": "https://example.com/deep-nested-file1.apk",
+                  "arch": "arm64-v8a"
+                },
+                {
+                  "name": "深度嵌套文件2",
+                  "type": "file",
+                  "download_link": "https://example.com/deep-nested-file2.apk",
+                  "arch": "armeabi-v7a"
+                }
+              ]
+            },
+            {
+              "name": "第二层文件A",
+              "type": "file",
+              "download_link": "https://example.com/level2-fileA.apk",
+              "arch": "all"
+            }
+          ]
+        },
+        {
+          "version": "1.2.0",
+          "name": "第二层目录 - 子目录B",
+          "type": "directory",
+          "children": [
+            {
+              "name": "第二层文件B",
+              "type": "file",
+              "download_link": "https://example.com/level2-fileB.apk",
+              "arch": "x86"
+            },
+            {
+              "version": "1.2.1",
+              "name": "第三层目录 - 复杂结构",
+              "type": "directory",
+              "children": [
+                {
+                  "version": "1.2.1.1",
+                  "name": "第四层目录 - 最终层",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "最终文件1",
+                      "type": "file",
+                      "download_link": "https://example.com/final-file1.apk",
+                      "arch": "x86_64"
+                    },
+                    {
+                      "name": "最终文件2",
+                      "type": "file",
+                      "download_link": "https://example.com/final-file2.apk",
+                      "arch": "all"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "第一层文件",
+          "type": "file",
+          "download_link": "https://example.com/level1-file.apk",
+          "arch": "all"
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "name": "另一个顶层目录",
+      "type": "directory",
+      "children": [
+        {
+          "name": "简单文件",
+          "type": "file",
+          "download_link": "https://example.com/simple-file.apk",
+          "arch": "arm64-v8a"
+        },
+        {
+          "version": "2.1.0",
+          "name": "单层嵌套目录",
+          "type": "directory",
+          "children": [
+            {
+              "name": "嵌套文件",
+              "type": "file",
+              "download_link": "https://example.com/nested-file.apk",
+              "arch": "armeabi-v7a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "根级别文件",
+      "type": "file",
+      "download_link": "https://example.com/root-file.apk",
+      "arch": "all"
+    }
+  ]
+}

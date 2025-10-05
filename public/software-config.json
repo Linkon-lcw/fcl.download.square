@@ -3,8 +3,8 @@
   "version": "2.1.0",
   "lastUpdated": "2025-10-02",
   "metadata": {
-    "displayOrder": ["fcl", "zl", "zl2", "renderer", "driver"],
-    "enabledSoftware": ["fcl", "zl", "zl2", "renderer", "driver"]
+    "displayOrder": ["fcl", "zl", "zl2", "renderer", "driver", "test"],
+    "enabledSoftware": ["fcl", "zl", "zl2", "renderer", "driver", "test"]
   },
   "children": [
     {
@@ -27,7 +27,8 @@
           "type": "file",
           "path": "https://frostlynx.work/external/fcl/file_tree.json",
           "description": "更新快",
-          "provider": "哈哈66623332提供"
+          "provider": "哈哈66623332提供",
+          "nestedPath": ["fcl"]
         },
         {
           "id": "F3",
@@ -172,6 +173,22 @@
           "path": "/ways/driver/driverDownWay8.json",
           "description": "本地文件",
           "provider": "MLFKWMC提供"
+        }
+      ]
+    },
+    {
+      "id": "test",
+      "name": "测试",
+      "description": "测试无限嵌套目录结构",
+      "type": "directory",
+      "children": [
+        {
+          "id": "T1",
+          "name": "测试线路1",
+          "type": "file",
+          "path": "/ways/test/test-nested.json",
+          "description": "多层嵌套目录测试",
+          "provider": "开发者提供"
         }
       ]
     }

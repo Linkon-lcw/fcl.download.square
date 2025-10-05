@@ -18,6 +18,7 @@ export interface SoftwareConfigWay {
   name: string;
   path: string;
   provider?: string;
+  nestedPath?: string[];
 }
 
 export interface SoftwareConfigFile {

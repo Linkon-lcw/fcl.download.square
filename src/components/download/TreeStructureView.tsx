@@ -2,7 +2,8 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import DownloadButton from "@/components/ui/DownloadButton";
-import { DownloadWay } from "@/types";
+import NestedDirectoryView from "./NestedDirectoryView";
+import { DownloadWay, DownloadVersion, DownloadFile } from "@/types";
 import { UnifiedItem, UnifiedFile } from "@/services/downloadUtils";
 
 // ReactMarkdown组件参数类型定义
@@ -188,7 +189,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
           </div>
         )}
         <div className="space-y-6">
-          {processedData.map((version) => (
+          {processedData.map((version: UnifiedItem) => (
             <div key={version.name} className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg">
               <h3 className="mb-1 font-semibold text-lg">
                 {version.name}
@@ -199,18 +200,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                 </p>
               )}
               {version.type === 'directory' && version.children && (
-                <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {version.children.map((file, index) => {
-                    const unifiedFile = file as UnifiedFile;
-                    return (
-                      <DownloadButton
-                        key={`${version.name}-${file.name}-${index}`}
-                        name={unifiedFile.arch || file.name || '下载'}
-                        downloadLink={unifiedFile.download_link}
-                      />
-                    );
-                  })}
-                </div>
+                <NestedDirectoryView items={version.children} />
               )}
             </div>
           ))}
@@ -218,35 +208,88 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
       </div>
     );
   }
-
-  // API 1.0 格式显示（默认）
-  return (
-    <div className="w-full max-w-3xl">
-      <h2 className="mb-4 font-semibold text-xl">
-        {appName} - {wayName}
-      </h2>
-      <div className="space-y-6">
-        {data.children.map((version) => (
-          <div key={version.name} className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg">
-            <h3 className="mb-4 font-semibold text-lg">
-              {version.name} {version.name === data.latest && (
-                <span className="bg-green-500 ml-2 px-2 py-1 rounded-full text-white text-xs">
-                  最新
-                </span>
-              )}
-            </h3>
-            <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {version.children.map((file, index) => (
-                <DownloadButton
-                  key={`${version.name}-${file.arch}-${index}`}
-                  name={file.arch}
-                  downloadLink={file.download_link}
-                />
-              ))}
+  
+  // API 1.0 格式显示 - 正确处理processedData和data的数据结构
+  console.log('TreeStructureView - API版本:', apiVersion, '原始数据:', data, '处理后数据:', processedData);
+  
+  // 如果API版本是1且有processedData，使用processedData；否则使用data
+  const useProcessedData = apiVersion === 1 && processedData;
+  const displayData = useProcessedData ? processedData : data;
+  
+  // 根据数据类型进行不同的渲染
+  if (useProcessedData && Array.isArray(displayData)) {
+    // processedData是UnifiedItem[]数组
+    return (
+      <div className="w-full max-w-3xl">
+        <h2 className="mb-4 font-semibold text-xl">
+          {appName} - {wayName}
+        </h2>
+        <div className="space-y-6">
+          {displayData.map((version: UnifiedItem) => (
+            <div key={version.name} className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg">
+              <h3 className="mb-4 font-semibold text-lg">
+                {version.name} {version.name === data.latest && (
+                  <span className="bg-green-500 ml-2 px-2 py-1 rounded-full text-white text-xs">
+                    最新
+                  </span>
+                )}
+              </h3>
+              <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {version.type === 'directory' && version.children && version.children.map((item: UnifiedItem, index: number) => (
+                  item.type === 'file' ? (
+                    <DownloadButton
+                      key={`${version.name}-${item.arch}-${index}`}
+                      name={item.arch}
+                      downloadLink={item.download_link}
+                    />
+                  ) : null
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else if (displayData && 'children' in displayData) {
+    // data是DownloadWay对象
+    return (
+      <div className="w-full max-w-3xl">
+        <h2 className="mb-4 font-semibold text-xl">
+          {appName} - {wayName}
+        </h2>
+        <div className="space-y-6">
+          {displayData.children && displayData.children.map((version: DownloadVersion) => (
+            <div key={version.name} className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg">
+              <h3 className="mb-4 font-semibold text-lg">
+                {version.name} {'latest' in displayData && version.name === displayData.latest && (
+                  <span className="bg-green-500 ml-2 px-2 py-1 rounded-full text-white text-xs">
+                    最新
+                  </span>
+                )}
+              </h3>
+              <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {version.children && version.children.map((file: DownloadFile, index: number) => (
+                  <DownloadButton
+                    key={`${version.name}-${file.arch}-${index}`}
+                    name={file.arch}
+                    downloadLink={file.download_link}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  } else {
+    // 默认情况，显示空状态
+    return (
+      <div className="w-full max-w-3xl">
+        <h2 className="mb-4 font-semibold text-xl">
+          {appName} - {wayName}
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400">暂无数据</p>
+      </div>
+    );
+  }
 }

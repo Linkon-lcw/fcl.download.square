@@ -25,9 +25,11 @@ export default function Download() {
     ?.children.find(way => way.id === selectedWay);
   
   const isExternalWay = currentWay?.path?.startsWith('http') || false;
+  const nestedPath = currentWay?.nestedPath || [];
   const { data: wayData, processedData, apiVersion, loading: wayLoading, error: wayError } = useDownloadWay(
     currentWay?.path || '', 
-    isExternalWay
+    isExternalWay,
+    nestedPath
   );
 
   // 处理应用选择

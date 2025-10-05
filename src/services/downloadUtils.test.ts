@@ -111,7 +111,7 @@ const api2TestData = {
         },
         {
           version: "2.0.0",
-          // name字段省略，测试API 2.0的可选字段
+          name: "fcl-v2.0.0-armeabi-v7a.apk",
           type: "file" as const,
           download_link: "/downloads/fcl-v2.0.0-armeabi-v7a.apk",
           arch: "armeabi-v7a"

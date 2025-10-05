@@ -15,12 +15,7 @@ export default function Home() {
       </h1>
       <ol className="font-mono text-sm/6 sm:text-left text-center list-decimal list-inside">
         <li className="mb-2 tracking-[-.01em]">
-          从{" "}
-          <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-mono font-semibold">
-            <a href="http://foldcraftlauncher.cn" target="_blank">
-              foldcraftlauncher.cn
-            </a>
-          </code>{" "}
+          从上面切换到下载页
           开始下载。
         </li>
         <li className="tracking-[-.01em]">
@@ -35,7 +30,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          现在下载
+          前往旧样式
         </a>
       </div>
     </main>
