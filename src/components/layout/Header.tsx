@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faDownload, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faDownload, faSun, faMoon, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import useDarkMode from "@/hooks/useDarkMode";
 
 // 样式生成函数
@@ -59,17 +59,18 @@ export default function Header({ currentPage, onPageChange }: { currentPage: str
 
   return (
     <header 
-    className="top-4 right-4 left-4 z-50 fixed justify-items-center items-center grid grid-cols-3 row-start-1 bg-black/10 dark:bg-white/10 shadow-md backdrop-blur-sm border-1 border-black/5 rounded-full w-[calc(100%-32px)] h-16 max-h-[64px] overflow-visitable">
-      <div className="flex flex-row justify-items-center items-start col-start-1 p-3 w-full max-w-16 md:max-w-[300px] h-full text-center">
+    className="top-4 right-4 left-4 z-50 fixed justify-items-center items-center grid grid-cols[64px_2fr_1fr] md:grid-cols-3 row-start-1 bg-black/10 dark:bg-white/10 shadow-md backdrop-blur-sm border-1 border-black/5 rounded-full w-[calc(100%-32px)] h-16 max-h-[64px] overflow-visitable">
+      <div className="flex flex-row justify-start items-center col-start-1 w-full h-full">
+      <div className="flex flex-row justify-items-center items-start col-start-1 p-3 pl-[10px] w-full max-w-16 md:max-w-[300px] h-auto text-center">
         <Image
-          className="w-[40px] h-[40px] translate-y-[-5px]"
+          className="w-[40px] h-[40px] translate-y-[-2px]"
           src="/image/FCL_icon.webp"
           alt="Fold Craft Launcher logo" 
           width={40}
           height={40}
         />
-        <p className="overflow-hidden md:overflow-visitable font-bold text-2xl whitespace-nowrap">Fold Craft Launcher</p>
-      </div>
+        <p className="pl-1 overflow-hidden md:overflow-visitable font-bold text-2xl whitespace-nowrap">Fold Craft Launcher</p>
+      </div></div>
       
       {/* 导航菜单 - 中间位置 */}
       <div className="flex flex-row justify-center items-center gap-4 col-start-2 w-auto max-h-[64px] overflow-visitable">
@@ -90,9 +91,9 @@ export default function Header({ currentPage, onPageChange }: { currentPage: str
         />
       </div>
       
-      <div className="flex flex-row justify-items-center items-end col-start-3 w-auto h-full text-center">
-        <button onClick={toggleDarkMode}>
-          {isDarkMode ? '切换浅色模式' : '切换深色模式'}
+      <div className="flex flex-row justify-end items-center col-start-3 p-3 w-full h-full text-center">
+        <button onClick={toggleDarkMode} className="flex justify-center items-center bg-transparent hover:bg-gray-500/60 dark:hover:bg-gray-600/60 rounded-full w-10 h-10 transition-all duration-300">
+          <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} className="text-[18px]" />
         </button>
       </div>
     </header>
