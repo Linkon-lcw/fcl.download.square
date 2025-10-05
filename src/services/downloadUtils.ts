@@ -4,7 +4,7 @@
  * 兼容nestedPath功能
  */
 
-import { SoftwareConfig, SoftwareConfigApp, SoftwareConfigWay, SoftwareConfigFile } from "@/types";
+// 移除未使用的导入
 
 // API 1.0 格式接口
 interface Api1Format {
@@ -21,13 +21,7 @@ interface Api1Child {
   children?: Api1Child[];  // 修改为Api1Child[]以支持嵌套目录
 }
 
-interface Api1File {
-  version?: string;
-  name: string;
-  type: 'file';
-  download_link: string;
-  arch: string;
-}
+// 移除未使用的Api1File接口
 
 // API 2.0 格式接口
 interface Api2Format {
@@ -44,6 +38,8 @@ interface Api2Child {
   name: string;
   type: 'directory' | 'file';
   children?: Api2File[];
+  download_link?: string;
+  arch?: string;
 }
 
 interface Api2File {
@@ -78,9 +74,9 @@ export type UnifiedItem = UnifiedFile | UnifiedDirectory;
  * @param data 下载线路数据
  * @returns API版本号 (1 或 2)
  */
-export function detectApiVersion(data: any): number {
+export function detectApiVersion(data: unknown): number {
   // 如果存在api_version字段且为2，则为API 2.0
-  if (data.api_version === 2) {
+  if (data && typeof data === 'object' && 'api_version' in data && (data as Record<string, unknown>).api_version === 2) {
     return 2;
   }
   // 否则默认为API 1.0
@@ -103,8 +99,8 @@ export function processApi1Data(data: Api1Format): UnifiedItem[] {
         result.push({
           name: child.name,
           type: 'file',
-          download_link: (child as any).download_link,
-          arch: (child as any).arch
+          download_link: child.download_link || '',
+          arch: child.arch || ''
         });
       } else if (child.type === 'directory' && child.children) {
         // 处理目录
@@ -175,8 +171,8 @@ export function processApi2Data(data: Api2Format): UnifiedItem[] {
         result.push({
           name: child.name,
           type: 'file',
-          download_link: (child as any).download_link,
-          arch: (child as any).arch
+          download_link: child.download_link || '',
+          arch: child.arch || ''
         });
       } else if (child.type === 'directory' && child.children) {
         // 处理目录
@@ -247,7 +243,7 @@ export function processNestedPath(items: UnifiedItem[], nestedPath: string[]): U
  * @param nestedPath 嵌套路径（可选）
  * @returns 统一格式的数据
  */
-export function processDownloadData(data: any, nestedPath?: string[]): UnifiedItem[] {
+export function processDownloadData(data: unknown, nestedPath?: string[]): UnifiedItem[] {
   const apiVersion = detectApiVersion(data);
   let result: UnifiedItem[];
   

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DownloadWay, SoftwareConfigFile } from "@/types";
+import { DownloadWay } from "@/types";
 
 interface AppDownloadWays {
   [key: string]: DownloadWay;

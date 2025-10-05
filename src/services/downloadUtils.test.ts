@@ -3,7 +3,6 @@
  */
 
 import { detectApiVersion, processApi1Data, processApi2Data, processNestedPath, processDownloadData, UnifiedItem } from './downloadUtils';
-import { SoftwareConfig, SoftwareConfigApp, SoftwareConfigWay, SoftwareConfigFile } from "@/types";
 
 // 简单的测试函数
 function test(description: string, testFn: () => void) {
@@ -18,14 +17,14 @@ function test(description: string, testFn: () => void) {
 
 // 简单的断言函数
 interface ExpectResult {
-  toBe: (expected: any) => ExpectResult;
+  toBe: (expected: unknown) => ExpectResult;
   toHaveLength: (expected: number) => ExpectResult;
-  toHaveProperty: (prop: string, expected?: any) => ExpectResult;
+  toHaveProperty: (prop: string, expected?: unknown) => ExpectResult;
 }
 
 function expect<T>(actual: T): ExpectResult {
   const self: ExpectResult = {
-    toBe: (expected: any) => {
+    toBe: (expected: unknown) => {
       if (actual !== expected) {
         throw new Error(`Expected ${expected}, but got ${actual}`);
       }
@@ -37,9 +36,9 @@ function expect<T>(actual: T): ExpectResult {
       }
       return self;
     },
-    toHaveProperty: (prop: string, expected?: any) => {
+    toHaveProperty: (prop: string, expected?: unknown) => {
       if (typeof actual === 'object' && actual !== null) {
-        const value = (actual as any)[prop];
+        const value = (actual as Record<string, unknown>)[prop];
         if (value === undefined) {
           throw new Error(`Expected object to have property ${prop}`);
         }
@@ -160,17 +159,17 @@ describe('下载线路处理工具模块测试', () => {
     const result = processApi1Data(api1TestData);
     expect(result).toHaveLength(1);
     expect(result[0]).toHaveProperty('type', 'directory');
-    expect((result[0] as any).children).toHaveLength(2);
-    expect((result[0] as any).children[0]).toHaveProperty('name', 'fcl-v1.0.0-arm64-v8a.apk');
+    expect((result[0] as { children: unknown[] }).children).toHaveLength(2);
+    expect((result[0] as { children: unknown[] }).children[0]).toHaveProperty('name', 'fcl-v1.0.0-arm64-v8a.apk');
   });
 
   test('处理API 2.0数据', () => {
     const result = processApi2Data(api2TestData);
     expect(result).toHaveLength(1);
     expect(result[0]).toHaveProperty('type', 'directory');
-    expect((result[0] as any).children).toHaveLength(2);
+    expect((result[0] as { children: unknown[] }).children).toHaveLength(2);
     // 测试name字段省略的情况
-    expect((result[0] as any).children[1]).toHaveProperty('name', '2.0.0');
+    expect((result[0] as { children: unknown[] }).children[1]).toHaveProperty('name', '2.0.0');
   });
 
   test('处理嵌套路径', () => {

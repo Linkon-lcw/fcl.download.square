@@ -3,9 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSoftwareConfig, useDownloadWay } from "@/hooks/useSoftwareConfig";
 import { 
-  SoftwareConfig, 
   SoftwareConfigApp, 
-  SoftwareConfigWay, 
   DownloadWay, 
   SoftwareConfigFile 
 } from "@/types";
@@ -59,13 +57,13 @@ export default function Download() {
   };
 
   // 检查是否为简单列表格式（用于驱动和渲染器）
-  const isSimpleListFormat = (data: any): data is SoftwareConfigFile[] => {
+  const isSimpleListFormat = (data: unknown): data is SoftwareConfigFile[] => {
     return Array.isArray(data) && data.length > 0 && data[0].name && data[0].url;
   };
 
   // 检查是否为树状结构格式（用于FCL、ZL、ZL2）
-  const isTreeStructureFormat = (data: any): data is DownloadWay => {
-    return data && data.children && Array.isArray(data.children);
+  const isTreeStructureFormat = (data: unknown): data is DownloadWay => {
+    return !!(data && (data as DownloadWay).children && Array.isArray((data as DownloadWay).children));
   };
 
   // 初始化选中的应用

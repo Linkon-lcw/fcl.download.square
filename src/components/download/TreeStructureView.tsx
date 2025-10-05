@@ -5,6 +5,48 @@ import DownloadButton from "@/components/ui/DownloadButton";
 import { DownloadWay } from "@/types";
 import { UnifiedItem, UnifiedFile } from "@/services/downloadUtils";
 
+// ReactMarkdown组件参数类型定义
+interface CodeComponentProps {
+  node?: unknown;
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+interface BlockquoteComponentProps {
+  node?: unknown;
+  children?: React.ReactNode;
+}
+
+interface ListComponentProps {
+  node?: unknown;
+  children?: React.ReactNode;
+}
+
+interface TableComponentProps {
+  node?: unknown;
+  children?: React.ReactNode;
+}
+
+interface LinkComponentProps {
+  node?: unknown;
+  children?: React.ReactNode;
+}
+
+interface HeadingComponentProps {
+  node?: unknown;
+  children?: React.ReactNode;
+}
+
+interface ParagraphComponentProps {
+  node?: unknown;
+  children?: React.ReactNode;
+}
+
+interface HrComponentProps {
+  node?: unknown;
+}
+
 interface TreeStructureViewProps {
   appName: string;
   wayName: string;
@@ -27,7 +69,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
               remarkPlugins={[remarkGfm]}
               components={{
                 // 自定义代码块样式
-                code({ node, inline, className, children, ...props }) {
+                code({ inline, children, ...props }: CodeComponentProps) {
                   const isInline = inline as boolean;
                   return isInline ? (
                     <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded font-mono text-red-600 dark:text-red-400 text-sm" {...props}>
@@ -42,7 +84,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义引用样式
-                blockquote({ node, children, ...props }) {
+                blockquote({ children, ...props }: BlockquoteComponentProps) {
                   return (
                     <blockquote className="my-2 py-2 pl-4 border-gray-300 dark:border-gray-600 border-l-4 italic" {...props}>
                       {children}
@@ -50,21 +92,21 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义列表样式
-                ul({ node, children, ...props }) {
+                ul({ children, ...props }: ListComponentProps) {
                   return (
                     <ul className="space-y-1 my-2 pl-5 list-disc" {...props}>
                       {children}
                     </ul>
                   );
                 },
-                ol({ node, children, ...props }) {
+                ol({ children, ...props }: ListComponentProps) {
                   return (
                     <ol className="space-y-1 my-2 pl-5 list-decimal" {...props}>
                       {children}
                     </ol>
                   );
                 },
-                li({ node, children, ...props }) {
+                li({ children, ...props }: ListComponentProps) {
                   return (
                     <li className="pl-1" {...props}>
                       {children}
@@ -72,7 +114,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义表格样式
-                table({ node, children, ...props }) {
+                table({ children, ...props }: TableComponentProps) {
                   return (
                     <div className="my-2 overflow-x-auto">
                       <table className="border border-gray-300 dark:border-gray-600 min-w-full border-collapse" {...props}>
@@ -81,14 +123,14 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                     </div>
                   );
                 },
-                th({ node, children, ...props }) {
+                th({ children, ...props }: TableComponentProps) {
                   return (
                     <th className="bg-gray-50 dark:bg-gray-800 px-3 py-2 border border-gray-300 dark:border-gray-600 font-semibold text-left" {...props}>
                       {children}
                     </th>
                   );
                 },
-                td({ node, children, ...props }) {
+                td({ children, ...props }: TableComponentProps) {
                   return (
                     <td className="px-3 py-2 border border-gray-300 dark:border-gray-600" {...props}>
                       {children}
@@ -96,7 +138,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义链接样式
-                a({ node, children, ...props }) {
+                a({ children, ...props }: LinkComponentProps) {
                   return (
                     <a className="text-blue-600 dark:text-blue-400 hover:underline" {...props}>
                       {children}
@@ -104,21 +146,21 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义标题样式
-                h1({ node, children, ...props }) {
+                h1({ children, ...props }: HeadingComponentProps) {
                   return (
                     <h1 className="mt-4 mb-2 font-bold text-2xl" {...props}>
                       {children}
                     </h1>
                   );
                 },
-                h2({ node, children, ...props }) {
+                h2({ children, ...props }: HeadingComponentProps) {
                   return (
                     <h2 className="mt-3 mb-2 font-semibold text-xl" {...props}>
                       {children}
                     </h2>
                   );
                 },
-                h3({ node, children, ...props }) {
+                h3({ children, ...props }: HeadingComponentProps) {
                   return (
                     <h3 className="mt-2 mb-1 font-medium text-lg" {...props}>
                       {children}
@@ -126,7 +168,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义段落样式
-                p({ node, children, ...props }) {
+                p({ children, ...props }: ParagraphComponentProps) {
                   return (
                     <p className="mb-2" {...props}>
                       {children}
@@ -134,7 +176,7 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
                   );
                 },
                 // 自定义水平分割线样式
-                hr({ node, ...props }) {
+                hr({ ...props }: HrComponentProps) {
                   return (
                     <hr className="my-4 border-gray-300 dark:border-gray-600" {...props} />
                   );
@@ -158,13 +200,16 @@ export default function TreeStructureView({ appName, wayName, data, apiVersion, 
               )}
               {version.type === 'directory' && version.children && (
                 <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {version.children.map((file, index) => (
-                    <DownloadButton
-                      key={`${version.name}-${file.name}-${index}`}
-                      name={(file as UnifiedFile).arch || file.name || '下载'}
-                      downloadLink={(file as UnifiedFile).download_link}
-                    />
-                  ))}
+                  {version.children.map((file, index) => {
+                    const unifiedFile = file as UnifiedFile;
+                    return (
+                      <DownloadButton
+                        key={`${version.name}-${file.name}-${index}`}
+                        name={unifiedFile.arch || file.name || '下载'}
+                        downloadLink={unifiedFile.download_link}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>

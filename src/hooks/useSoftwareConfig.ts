@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
   SoftwareConfig,
-  SoftwareConfigApp,
-  SoftwareConfigWay,
   SoftwareConfigFile,
   DownloadWay,
 } from '@/types';

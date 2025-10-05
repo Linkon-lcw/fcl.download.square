@@ -84,7 +84,7 @@ export interface TreeStructureViewProps {
   wayName: string;
   data: DownloadWay;
   apiVersion?: number | null;
-  processedData?: any;
+  processedData?: unknown;
 }
 
 export interface SimpleListViewProps {
